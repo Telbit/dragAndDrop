@@ -1,7 +1,7 @@
 let dropzone = document.getElementById('dropzone');
 let nodes = document.getElementsByClassName('node');
 let selectedNode = '';
-let selectedNodePos = 0;
+let selectedNodePos;
 let startPosition;
 
 
@@ -15,17 +15,13 @@ function init() {
         nodes[i].addEventListener("dragstart", (event) => {
             event.dataTransfer.setData('text', event.target.id);
 
-            // get all elements vertical position
+            // set all elements position
             establishNodePosition()
 
             selectedNode = document.getElementById(event.target.id);
 
             // get selected node's place in the list
             startPosition = getStartPosition();
-
-            setTimeout(() => {
-                dropzone.removeChild(selectedNode);
-            }, 0)
         });
 
         nodes[i].addEventListener("dragend", (event) =>{
@@ -34,8 +30,6 @@ function init() {
             if (selectedNode !== dropzone.children[selectedNodePos]) {
                 dropzone.insertBefore(selectedNode, dropzone.children[startPosition]);
             }
-
-            resetNodes();
 
             setTimeout(() => {
                 selectedNode.style.backgroundColor = 'cornsilk';
@@ -48,16 +42,11 @@ function init() {
         event.preventDefault();
 
         // get the selected position's place in the nodes list
-        whereAmI(event.clientY);
+        getNode(event.clientX, event.clientY);
     });
 
     dropzone.addEventListener("drop", (event) => {
         event.preventDefault();
-
-        // insert the node to the selected position
-        dropzone.insertBefore(selectedNode, dropzone.children[selectedNodePos]);
-
-        resetNodes();
 
         setTimeout(() => {
             selectedNode.style.backgroundColor = 'cornsilk';
@@ -72,44 +61,11 @@ function establishNodePosition() {
         let element = document.getElementById(nodes[i]['id']);
         let position = element.getBoundingClientRect();
         let yTop = position.top;
-        let yBottom = position.bottom;
-        nodes[i]['yPos'] = yTop + ((yBottom-yTop)/2);
-    }
-}
-
-function resetNodes() {
-    for (let i = 0; i < nodes.length; i++) {
-        document.getElementById(nodes[i]['id']).style.marginTop = '0.5em';
-    }
-}
-
-function whereAmI(currentYPos) {
-
-    // get all elements vertical position
-    establishNodePosition()
-
-    // get the upper and the lower node
-    for (let i = 0; i < nodes.length; i++) {
-        if (nodes[i]['yPos'] < currentYPos) {
-            var nodeAbove = document.getElementById(nodes[i]['id']);
-            selectedNodePos = i + 1;
-        } else {
-            if (!nodeBelow) {
-                var nodeBelow = document.getElementById(nodes[i]['id']);
-            }
-        }
-    }
-    if (typeof nodeAbove == "undefined") {
-        selectedNodePos = 0;
-    }
-
-    // console.log(selectedNodePos);
-
-    resetNodes();
-
-    if (typeof nodeBelow == 'object') {
-        nodeBelow.style.marginTop = '3em';
-        nodeBelow.style.transition = '0.5s';
+        // let yBottom = position.bottom;
+        let xLeft = position.left;
+        // let xRight = position.right;
+        nodes[i]['yPos'] = yTop; //+ ((yBottom-yTop)/2);
+        nodes[i]['xPos'] = xLeft; //+ ((xRight-xLeft)/2);
     }
 }
 
@@ -118,6 +74,35 @@ function getStartPosition() {
         if (nodes[nodePos] === selectedNode) {
             return nodePos;
         }
+    }
+}
+
+function getNode(xPos, yPos) {
+
+    establishNodePosition()
+    let beforeY = nodes[0]['yPos'];
+    let beforeX = 0;
+
+    for (let i = 0; i < nodes.length; i++) {
+        if (beforeY <= nodes[i]['yPos'] && nodes[i]['yPos'] < yPos){
+            beforeY = nodes[i]['yPos'];
+        }
+    }
+
+    for (let i = 0; i < nodes.length; i++) {
+        if (nodes[i]['yPos'] === beforeY && nodes[i]['xPos'] < xPos){
+            beforeX = nodes[i]['xPos'];
+            var newPos = i;
+        }
+    }
+
+    if (newPos !== selectedNodePos){
+        selectedNodePos = newPos;
+        setTimeout(() => {
+            dropzone.removeChild(selectedNode);
+            dropzone.insertBefore(selectedNode, dropzone.children[selectedNodePos]);
+        },0)
+        console.log(selectedNodePos);
     }
 }
 
