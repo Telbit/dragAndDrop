@@ -7,6 +7,8 @@ let startPosition;
 
 function init() {
 
+    loadCards();
+
     for (let i = 0; i < nodes.length; i++) {
         nodes[i].addEventListener("mousedown", (event) => {
                 document.getElementById(event.currentTarget.id).style.backgroundColor = 'tomato';
@@ -104,6 +106,26 @@ function getNode(xPos, yPos) {
         },0)
         console.log(selectedNodePos);
     }
+}
+
+function loadCards() {
+
+    let cards = ``;
+
+    for (let i = 0; i < 10; i++) {
+        cards += `<div id="record-id-${i}" class="node" draggable="true">
+                        <div class="image">
+                            ${i}
+                            <img src="static/images/hanoi.png" alt="hanoi" draggable="false">
+                        </div>
+                        <div class="footer">bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla</div>
+                    </div>`;
+    }
+    dropzone.innerHTML = cards;
+}
+
+function getImages() {
+
 }
 
 init();
