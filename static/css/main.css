@@ -3,7 +3,6 @@
     margin: 1%;
     padding: 1%;
     min-height: 100vh;
-    font-size: 150%;
 }
 
 .node {
@@ -12,8 +11,21 @@
     margin: 1.666666%;
     padding: 1%;
     border: 3px skyblue solid;
-    width: 30%;
+    width: 21.6%;
     float: left;
+}
+
+/*.image{*/
+/*    height:20%;*/
+/*}*/
+
+.footer{
+    background-color: aqua;
+    padding: 5px
+}
+
+img{
+    width: 100%;
 }
 
 @media only screen and (max-width: 600px) {

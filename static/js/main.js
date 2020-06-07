@@ -9,7 +9,7 @@ function init() {
 
     for (let i = 0; i < nodes.length; i++) {
         nodes[i].addEventListener("mousedown", (event) => {
-            document.getElementById(event.target.id).style.backgroundColor = 'tomato';
+                document.getElementById(event.currentTarget.id).style.backgroundColor = 'tomato';
         });
 
         nodes[i].addEventListener("dragstart", (event) => {
@@ -91,7 +91,7 @@ function getNode(xPos, yPos) {
 
     for (let i = 0; i < nodes.length; i++) {
         if (nodes[i]['yPos'] === beforeY && nodes[i]['xPos'] < xPos){
-            beforeX = nodes[i]['xPos'];
+            //beforeX = nodes[i]['xPos'];
             var newPos = i;
         }
     }
