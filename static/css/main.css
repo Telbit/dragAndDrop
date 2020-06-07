@@ -1,14 +1,36 @@
 #dropzone {
     background-color: powderblue;
-    margin: 0.5em;
-    padding: 0.4em;
+    margin: 1%;
+    padding: 1%;
     min-height: 100vh;
-    font-size: 1.4em;
 }
 
 .node {
+    box-sizing: border-box;
     background-color: cornsilk;
-    margin: 0.5em;
-    padding: 0.4em;
+    margin: 1.666666%;
+    padding: 1%;
     border: 3px skyblue solid;
+    width: 21.6%;
+    float: left;
+}
+
+/*.image{*/
+/*    height:20%;*/
+/*}*/
+
+.footer{
+    background-color: aqua;
+    padding: 5px
+}
+
+img{
+    width: 100%;
+}
+
+@media only screen and (max-width: 600px) {
+    .node{
+        float: none;
+        width: auto;
+    }
 }

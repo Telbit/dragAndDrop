@@ -1,57 +1,58 @@
 let dropzone = document.getElementById('dropzone');
 let nodes = document.getElementsByClassName('node');
 let selectedNode = '';
-let selectedNodePos = 0;
+let selectedNodePos;
 let startPosition;
 
 
 function init() {
 
+    loadCards();
+
     for (let i = 0; i < nodes.length; i++) {
         nodes[i].addEventListener("mousedown", (event) => {
-            document.getElementById(event.target.id).style.backgroundColor = 'tomato';
+                document.getElementById(event.currentTarget.id).style.backgroundColor = 'tomato';
         });
 
         nodes[i].addEventListener("dragstart", (event) => {
             event.dataTransfer.setData('text', event.target.id);
 
+            // set all elements position
             establishNodePosition()
 
             selectedNode = document.getElementById(event.target.id);
-            startPosition = getStartPosition();
 
-            setTimeout(() => {
-                dropzone.removeChild(selectedNode);
-            }, 0)
+            // get selected node's place in the list
+            startPosition = getStartPosition();
         });
 
         nodes[i].addEventListener("dragend", (event) =>{
+
+            // drop the selected node to the start position if the drag ended without drop
             if (selectedNode !== dropzone.children[selectedNodePos]) {
                 dropzone.insertBefore(selectedNode, dropzone.children[startPosition]);
             }
-            resetNodes();
+
             setTimeout(() => {
                 selectedNode.style.backgroundColor = 'cornsilk';
-                selectedNode.style.transition = '2s';
+                selectedNode.style.transition = '0.5s';
             }, 200);
         });
     }
 
     dropzone.addEventListener("dragover", (event) => {
         event.preventDefault();
-        whereAmI(event.clientY);
+
+        // get the selected position's place in the nodes list
+        getNode(event.clientX, event.clientY);
     });
 
     dropzone.addEventListener("drop", (event) => {
         event.preventDefault();
 
-        dropzone.insertBefore(selectedNode, dropzone.children[selectedNodePos]);
-
-        resetNodes();
-
         setTimeout(() => {
             selectedNode.style.backgroundColor = 'cornsilk';
-            selectedNode.style.transition = '2s';
+            selectedNode.style.transition = '0.5s';
         }, 200);
     });
 }
@@ -62,39 +63,11 @@ function establishNodePosition() {
         let element = document.getElementById(nodes[i]['id']);
         let position = element.getBoundingClientRect();
         let yTop = position.top;
-        let yBottom = position.bottom;
-        nodes[i]['yPos'] = yTop + ((yBottom-yTop)/2);
-    }
-}
-
-function resetNodes() {
-    for (let i = 0; i < nodes.length; i++) {
-        document.getElementById(nodes[i]['id']).style.marginTop = '0.5em';
-    }
-}
-
-function whereAmI(currentYPos) {
-    establishNodePosition()
-
-    for (let i = 0; i < nodes.length; i++) {
-        if (nodes[i]['yPos'] < currentYPos) {
-            var nodeAbove = document.getElementById(nodes[i]['id']);
-            selectedNodePos = i + 1;
-        } else {
-            if (!nodeBelow) {
-                var nodeBelow = document.getElementById(nodes[i]['id']);
-            }
-        }
-    }
-    if (typeof nodeAbove == "undefined") {
-        selectedNodePos = 0;
-    }
-
-    resetNodes();
-
-    if (typeof nodeBelow == 'object') {
-        nodeBelow.style.marginTop = '3em';
-        nodeBelow.style.transition = '1.8s';
+        // let yBottom = position.bottom;
+        let xLeft = position.left;
+        // let xRight = position.right;
+        nodes[i]['yPos'] = yTop; //+ ((yBottom-yTop)/2);
+        nodes[i]['xPos'] = xLeft; //+ ((xRight-xLeft)/2);
     }
 }
 
@@ -104,6 +77,55 @@ function getStartPosition() {
             return nodePos;
         }
     }
+}
+
+function getNode(xPos, yPos) {
+
+    establishNodePosition()
+    let beforeY = nodes[0]['yPos'];
+    let beforeX = 0;
+
+    for (let i = 0; i < nodes.length; i++) {
+        if (beforeY <= nodes[i]['yPos'] && nodes[i]['yPos'] < yPos){
+            beforeY = nodes[i]['yPos'];
+        }
+    }
+
+    for (let i = 0; i < nodes.length; i++) {
+        if (nodes[i]['yPos'] === beforeY && nodes[i]['xPos'] < xPos){
+            //beforeX = nodes[i]['xPos'];
+            var newPos = i;
+        }
+    }
+
+    if (newPos !== selectedNodePos){
+        selectedNodePos = newPos;
+        setTimeout(() => {
+            dropzone.removeChild(selectedNode);
+            dropzone.insertBefore(selectedNode, dropzone.children[selectedNodePos]);
+        },0)
+        console.log(selectedNodePos);
+    }
+}
+
+function loadCards() {
+
+    let cards = ``;
+
+    for (let i = 0; i < 10; i++) {
+        cards += `<div id="record-id-${i}" class="node" draggable="true">
+                        <div class="image">
+                            ${i}
+                            <img src="static/images/hanoi.png" alt="hanoi" draggable="false">
+                        </div>
+                        <div class="footer">bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla</div>
+                    </div>`;
+    }
+    dropzone.innerHTML = cards;
+}
+
+function getImages() {
+
 }
 
 init();
