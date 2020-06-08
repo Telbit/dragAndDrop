@@ -7,11 +7,15 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/main.css') }}">
     <script src="{{ url_for('static', filename='js/main.js') }}" defer></script>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/modal-box.css') }}" type="text/css">
     <title>Drag and Drop</title>
 </head>
 <body>
-    <div id="dropzone">
-        <p>cards...</p>
+    <div>
+        <button type="submit" id="modal-button">modal box</button>
+        <div id="dropzone">
+            <p>cards...</p>
+        </div>
     </div>
 </body>
 </html>

@@ -26,6 +26,12 @@
 
 img{
     width: 100%;
+    height: 150px;
+    object-fit: cover; /* image corp */
+}
+
+.idParagr{
+    margin: 0;
 }
 
 @media only screen and (max-width: 600px) {
