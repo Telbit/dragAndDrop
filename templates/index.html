@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/index.css') }}">
+    <title>Document</title>
+</head>
+<body>
+    <div id="container">
+        <div id="header">
+            <div id="main-image-box">
+                <img src="{{ url_for('static', filename='images/designtest.jpeg') }}" alt="design">
+            </div>
+            <div id="main-text-box">
+                <p>
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit,
+                    sed do eiusmod tempor incididunt ut labore et dolore magna
+                    dolor sit amet, consectetur adipiscin
+                    sed do eiusmod tempor incididunt ut labore et
+                    lorem ipsum dolor sit amet, consectetur adipiscing elit,
+                    sed do eiusmod tempor incididunt ut labore et dolore magn
+                    scorem ipsum dolor sit amet, consectetur adipiscin
+                    sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                </p>
+                <button type="button" id="email-button">Send an email</button>
+            </div>
+        </div>
+        {% for i in range(3) %}
+            <div class="row">
+                {% for y in range(3) %}
+                    <div class="col">
+                        <div class="element">
+                            <div class="image-box">
+                                <img src="{{ url_for('static', filename='images/designtest.jpeg') }}" alt="design">
+                            </div>
+                            <div class="text-box">
+                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit,
+                                    sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                                </p>
+                            </div>
+                            <div class="text-button">
+                                <button type="button">more</button>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        {% endfor %}
+    </div>
+</body>
+</html>
