@@ -1,0 +1,86 @@
+%!Adobe-FontList 1.20
+%Locale:0x409
+
+%BeginFont
+Handler:DirectoryHandler
+FontType:Invalid
+OutlineFileName:/Users/felixtelegdi/Desktop/webem/webem Folder/Document fonts/AdobeFnt21.lst
+FileLength:1731
+FileModTime:613391351
+%EndFont
+
+%BeginFont
+Handler:DirectoryHandler
+FontType:Type1
+FontName:BebasNeueBook
+FamilyName:Bebas Neue
+StyleName:Book
+MenuName:Bebas Neue Book
+StyleBits:0
+WeightClass:400
+WidthClass:5
+AngleClass:0
+FullName:Bebas Neue Book
+WritingScript:Roman
+OutlineFileName:/Users/felixtelegdi/Desktop/webem/webem Folder/Document fonts/BebasNeue Book.otf
+DataFormat:sfntData
+UsesStandardEncoding:yes
+isCFF:yes
+hasSVG:no
+VariableFontType:NonVariableFont
+FileLength:106516
+FileModTime:411691238
+NameArray:0,Mac,4,Bebas Neue Book
+NameArray:0,Win,1,Bebas Neue Book
+NameArray:0,Win,16,Bebas Neue
+%EndFont
+
+%BeginFont
+Handler:DirectoryHandler
+FontType:Type1
+FontName:Geomanist
+FamilyName:Geomanist
+StyleName:Regular
+MenuName:Geomanist
+StyleBits:0
+WeightClass:400
+WidthClass:5
+AngleClass:0
+FullName:Geomanist
+WritingScript:Roman
+OutlineFileName:/Users/felixtelegdi/Desktop/webem/webem Folder/Document fonts/Geomanist-Regular.otf
+DataFormat:sfntData
+UsesStandardEncoding:yes
+isCFF:yes
+hasSVG:no
+VariableFontType:NonVariableFont
+FileLength:39036
+FileModTime:521030388
+NameArray:0,Mac,4,Geomanist
+NameArray:0,Win,1,Geomanist
+%EndFont
+
+%BeginFont
+Handler:DirectoryHandler
+FontType:TrueType
+FontName:LibreBaskerville-Regular
+FamilyName:Libre Baskerville
+StyleName:Regular
+MenuName:Libre Baskerville
+StyleBits:0
+WeightClass:400
+WidthClass:5
+AngleClass:0
+FullName:Libre Baskerville
+WritingScript:Roman
+OutlineFileName:/Users/felixtelegdi/Desktop/webem/webem Folder/Document fonts/LibreBaskerville-Regular.ttf
+DataFormat:sfntData
+hasSVG:no
+VariableFontType:NonVariableFont
+FileLength:160364
+FileModTime:462539501
+NameArray:0,Mac,18,Libre Baskerville
+NameArray:0,Mac,4,Libre Baskerville
+NameArray:0,Win,1,Libre Baskerville
+%EndFont
+

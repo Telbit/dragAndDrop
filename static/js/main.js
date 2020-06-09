@@ -3,12 +3,12 @@ let nodes = document.getElementsByClassName('node');
 let selectedNode = '';
 let selectedNodePos;
 let startPosition;
-let imagesData;
+// let imagesData;
 
 
-function init() {
+function init(data) {
 
-    loadCards();
+    loadCards(data);
 
     for (let i = 0; i < nodes.length; i++) {
         nodes[i].addEventListener("mousedown", (event) => {
@@ -127,7 +127,7 @@ function getNode(xPos, yPos) {
     }
 }
 
-function loadCards() {
+function loadCards(imagesData) {
 
     // console.log(imagesData);
     let cards = ``;
@@ -145,14 +145,10 @@ function loadCards() {
     dropzone.innerHTML = cards;
 }
 
-function getImages() {
+function getImages(callback) {
     fetch('/get_images')
         .then((response) => response.json())
-        .then((data) => {
-            imagesData = data;
-            // console.log(images);
-            init();
-        })
+        .then((data) => callback(data))
 }
 
 function initModal() {
@@ -208,4 +204,4 @@ function removeModalBox() {
 }
 
 // init();
-getImages();
+getImages(init);

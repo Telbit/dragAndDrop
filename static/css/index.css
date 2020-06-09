@@ -4,26 +4,23 @@
     box-sizing:border-box;
 }
 
-html, body{
-    height: 100%;
-}
-
 .row{
     display:flex;
-    /*border: 1px solid blue;*/
 }
 
 .col{
-    /*border: 1px solid orange;*/
     width: 33.3333vw;
     height: 30vw;
 }
 
 .element{
-    /*border: 1px solid #68b410;*/
     height: 100%;
     background-color:#f0f0f0;
-    box-shadow: 0px 0px 3px 1px #e4e4e4;
+}
+
+body{
+    font-family: librebasker;
+    font-size: 13.9px;
 }
 
 body, .col{
@@ -50,17 +47,19 @@ body, .col{
     height:100%;
     width: 100%;
     background-color:#f0f0f0;
-    border: none;
-    box-shadow: 0 0 3px 1px #828282;
+    border: 0.078vw solid black;
     border-radius: 1px;
+}
+
+button{
+    font-family: librebasker;
 }
 
 #email-button{
     margin-top: 2.3vw;
     background-color: white;
     padding: 0.7vw 1.7vw;
-    border: none;
-    box-shadow: 0 0 3px 1px #828282;
+    border: 0.078vw solid black;
     border-radius: 1px;
 }
 
@@ -73,18 +72,80 @@ img{
 #header{
     display: flex;
     height: 40vw;
-    margin: 2.3vw;
+    margin: 1vw 2.3vw 2.3vw 2.3vw;
 }
 
 #main-text-box{
     width:35%;
-    padding: 4.6vw;
+    padding: 2.3vw 4.6vw;
+    overflow:hidden;
 }
 
 #main-image-box{
     height:100%;
     width:65%;
-    box-shadow: 0 0 3px 1px #e4e4e4;
+}
+
+#top-nav-bar{
+    display:flex;
+    height:4vw;
+    width:100%;
+    background-color:white;
+    position:sticky;
+    top:0; left:0; right:0;
+    padding: 1.5vw 2.3vw 0 2.3vw;
+}
+
+.nav-button{
+    height: 1.2vw;
+    width: 1.2vw;
+    border:none;
+    float: right;
+    margin-left: 1vw;
+}
+
+button{
+    cursor: pointer;
+}
+
+#about{
+    background: url("/static/icons/about-icon1.png") no-repeat;
+    background-size: 100%;
+}
+
+#menu{
+    background: url("/static/icons/menu-icon2.png") no-repeat;
+    background-size: 100%;
+}
+
+#search{
+    background: url("/static/icons/search-icon1.png") no-repeat;
+    background-size: 100%;
+}
+
+#page-name{
+    text-align: center;
+    font-size: 1.2vw;
+}
+
+#name{
+    font-size: 1.2vw;
+    font-family: bebasneue;
+    letter-spacing: 0.5vw;
+}
+
+@font-face {
+    font-family: bebasneue;
+    src: url("/static/Document fonts/BebasNeue Book.otf");
+}
+
+@font-face {
+    font-family: librebasker;
+    src: url("/static/Document fonts/LibreBaskerville-Regular.ttf");
+}
+
+.nav-parts{
+    width: 33.33%;
 }
 
 @media only screen and (max-width: 1250px) {

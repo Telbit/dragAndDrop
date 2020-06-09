@@ -6,8 +6,13 @@ app = Flask(__name__)
 
 
 @app.route('/')
+def main_page():
+    return render_template('index.html')
+
+
+@app.route('/drag_n_drop')
 def drag_n_drop():
-    return render_template('index.html')  # render_template('drag_drop.html')
+    return render_template('drag_drop.html')
 
 
 @app.route('/get_images')
