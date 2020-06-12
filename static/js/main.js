@@ -3,11 +3,12 @@ let nodes = document.getElementsByClassName('node');
 let selectedNode = '';
 let selectedNodePos;
 let startPosition;
+// let imagesData;
 
 
-function init() {
+function init(data) {
 
-    loadCards();
+    loadCards(data);
 
     for (let i = 0; i < nodes.length; i++) {
         nodes[i].addEventListener("mousedown", (event) => {
@@ -50,11 +51,68 @@ function init() {
     dropzone.addEventListener("drop", (event) => {
         event.preventDefault();
 
+        const url = "/order-update";
+        const formData = new FormData();
+        formData.append("position", selectedNodePos);
+        formData.append("order_id", selectedNode.getAttribute('data-order-id'));
+        formData.append("id", selectedNode.getAttribute('data-image-id'));
+
+        for (let i = 0; i < dropzone.children.length; i++) {
+            dropzone.children[i].setAttribute('data-order-id', i);
+            dropzone.children[i].querySelector('.idParagr').innerText = i;
+        }
+
+        fetch(url, {
+            method: "post",
+            body: formData
+        }).catch(console.error);
+
         setTimeout(() => {
             selectedNode.style.backgroundColor = 'cornsilk';
             selectedNode.style.transition = '0.5s';
         }, 200);
     });
+
+    let saveButtons = document.querySelectorAll('.save')
+    for (let button of saveButtons) {
+        button.addEventListener('click', saveCard);
+    }
+
+    let deleteButtons = document.querySelectorAll('.delete')
+    for (let button of deleteButtons) {
+        button.addEventListener('click', deleteCard);
+    }
+
+    initModal();
+}
+
+function saveCard(event) {
+    console.log(event.target);
+    console.log('save');
+    let title = event.target.parentNode.parentNode.querySelector('.title_input').value;
+    let image_id = event.target.parentNode.parentNode.getAttribute('data-image-id');
+    console.log(title);
+
+    let url = '/save';
+    const formData = new FormData();
+    formData.append('title', title)
+    formData.append('id', image_id);
+
+
+    fetch(url, {
+       method:'post',
+       body: formData
+    }).catch(console.error);
+
+}
+
+function deleteCard(event) {
+    console.log(event.target);
+    console.log('delete');
+
+    let image_id = event.target.parentNode.parentNode.getAttribute('data-image-id');
+
+    fetch(`/delete/${image_id}`)
 }
 
 // get all elements vertical position
@@ -104,28 +162,91 @@ function getNode(xPos, yPos) {
             dropzone.removeChild(selectedNode);
             dropzone.insertBefore(selectedNode, dropzone.children[selectedNodePos]);
         },0)
-        console.log(selectedNodePos);
+        // console.log(selectedNodePos);
     }
 }
 
-function loadCards() {
+function loadCards(imagesData) {
 
+    // console.log(imagesData);
     let cards = ``;
 
-    for (let i = 0; i < 10; i++) {
-        cards += `<div id="record-id-${i}" class="node" draggable="true">
-                        <div class="image">
-                            ${i}
-                            <img src="static/images/hanoi.png" alt="hanoi" draggable="false">
-                        </div>
-                        <div class="footer">bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla</div>
-                    </div>`;
+    for (let image of imagesData) {
+        cards +=`<div id="record-id-${image['order_id']}" 
+                data-image-id="${image['id']}" data-order-id="${image['order_id']}" class="node" draggable="true">
+                    <div class="image">
+                        <p class="idParagr">${image['order_id']}</p>
+                        <button class="save">save</button>
+                        <button class="delete">delete</button>
+                        <img src="${image['path']}" alt="image" draggable="false">
+                    </div>
+                    <div class="footer">
+                        <form action="#">
+                            <textarea name="title_input" class="title_input" rows="5">${image['title']}</textarea>
+                        </form>
+                    </div>
+                </div>`;
     }
     dropzone.innerHTML = cards;
 }
 
-function getImages() {
-
+function getImages(callback) {
+    fetch('/get_images')
+        .then((response) => response.json())
+        .then((data) => callback(data))
 }
 
-init();
+function initModal() {
+    let modalButton = document.getElementById('modal-button');
+    modalButton.addEventListener('click', event => {
+
+        let modalBox = (`<div id="modal">
+                            <div id="modal-content">
+                                <div id="upload-btn-div">
+                                        <input type="file" id="inpFile" name="inpFile" multiple accept="image/*">
+                                </div>
+                                <div id="modal-btn-div">
+                                    <button class="modal-btn" type="button" id="uploadButton">Upload</button>
+                                    <button class="modal-btn" type="button" id="close-button">close</button>
+                                </div>
+                            </div>
+                        </div>`);
+
+        document.body.insertAdjacentHTML('beforeend', modalBox);
+
+        const uploadButton = document.getElementById("uploadButton");
+        const inpFile = document.getElementById("inpFile");
+        const closeButton = document.getElementById("close-button");
+
+        uploadButton.addEventListener("click", event => {
+            event.preventDefault();
+
+            const url = "/upload";
+            const formData = new FormData();
+
+            for (let file of inpFile.files) {
+                formData.append(`${file.name}`, file);
+            }
+
+            fetch(url, {
+                method: "post",
+                mode: "no-cors",
+                body: formData
+            }).catch(console.error);
+
+            removeModalBox();
+        });
+
+        closeButton.addEventListener('click', event => {
+            removeModalBox();
+        });
+    });
+}
+
+function removeModalBox() {
+    let modal = document.getElementById('modal');
+    modal.remove();
+}
+
+// init();
+getImages(init);
