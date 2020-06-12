@@ -73,7 +73,46 @@ function init(data) {
         }, 200);
     });
 
+    let saveButtons = document.querySelectorAll('.save')
+    for (let button of saveButtons) {
+        button.addEventListener('click', saveCard);
+    }
+
+    let deleteButtons = document.querySelectorAll('.delete')
+    for (let button of deleteButtons) {
+        button.addEventListener('click', deleteCard);
+    }
+
     initModal();
+}
+
+function saveCard(event) {
+    console.log(event.target);
+    console.log('save');
+    let title = event.target.parentNode.parentNode.querySelector('.title_input').value;
+    let image_id = event.target.parentNode.parentNode.getAttribute('data-image-id');
+    console.log(title);
+
+    let url = '/save';
+    const formData = new FormData();
+    formData.append('title', title)
+    formData.append('id', image_id);
+
+
+    fetch(url, {
+       method:'post',
+       body: formData
+    }).catch(console.error);
+
+}
+
+function deleteCard(event) {
+    console.log(event.target);
+    console.log('delete');
+
+    let image_id = event.target.parentNode.parentNode.getAttribute('data-image-id');
+
+    fetch(`/delete/${image_id}`)
 }
 
 // get all elements vertical position
@@ -137,9 +176,15 @@ function loadCards(imagesData) {
                 data-image-id="${image['id']}" data-order-id="${image['order_id']}" class="node" draggable="true">
                     <div class="image">
                         <p class="idParagr">${image['order_id']}</p>
+                        <button class="save">save</button>
+                        <button class="delete">delete</button>
                         <img src="${image['path']}" alt="image" draggable="false">
                     </div>
-                    <div class="footer">bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla</div>
+                    <div class="footer">
+                        <form action="#">
+                            <textarea name="title_input" class="title_input" rows="5">${image['title']}</textarea>
+                        </form>
+                    </div>
                 </div>`;
     }
     dropzone.innerHTML = cards;

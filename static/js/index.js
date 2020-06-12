@@ -24,15 +24,10 @@ function loadCards(data) {
                                 <img src="${data[index]['path']}" alt="design">
                             </div>
                             <div class="text-box">
-                                <p>
-                                    A discerning quid ut etus re corepudia idicium dem anihicipid que molorem
-                                    im escimped quatiis ute omnim impe vellesequo dit acea sum que periatet ut
-                                    et veliquias pelit essit quaturi busandi andenem dolori verum nossus utate mo
-                                    blate nobit la volupti occusam, officaes.
-                                </p>
+                                <p>${data[index]['title']}</p>
                             </div>
                             <div class="text-button">
-                                <button type="button">More</button>
+                                <button onclick="window.open('${data[index]['full_image_path']}', '_blank')">More</button>
                             </div>
                         </div>
                     </div>
