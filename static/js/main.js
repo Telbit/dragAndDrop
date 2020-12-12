@@ -12,7 +12,8 @@ function init(data) {
 
     for (let i = 0; i < nodes.length; i++) {
         nodes[i].addEventListener("mousedown", (event) => {
-                document.getElementById(event.currentTarget.id).style.backgroundColor = 'tomato';
+                // document.getElementById(event.currentTarget.id).style.backgroundColor = 'tomato';
+            event.currentTarget.style.backgroundColor = 'tomato';
         });
 
         nodes[i].addEventListener("dragstart", (event) => {
@@ -89,8 +90,8 @@ function init(data) {
 function saveCard(event) {
     console.log(event.target);
     console.log('save');
-    let title = event.target.parentNode.parentNode.querySelector('.title_input').value;
-    let image_id = event.target.parentNode.parentNode.getAttribute('data-image-id');
+    let title = event.target.closest('.node').querySelector('.title_input').value;
+    let image_id = event.target.closest('.node').getAttribute('data-image-id');
     console.log(title);
 
     let url = '/save';
